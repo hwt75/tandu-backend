@@ -3,11 +3,14 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const compression = require('compression')
 var path = require('path');
-require('dotenv').config();
-// http://127.0.0.1:3000
+var routes = require('./api/route/index');
+
+
+
+
 const app = express();
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3000 ;
 const host = process.env.HOST || 'localhost';
 // set up domain 
 app.set('port', port);
@@ -36,10 +39,33 @@ app.listen(app.get('port'), app.get('host'),()=>{
     console.log(`Server is running at http://${app.get('host')}:${app.get('port')}`)
 })
 
-// http://127.0.0.1:3000
+// app.use(limitConcurrentSessions)
+app.use('/api',routes);
+app.get('/', (req,res)=>{
+    res.json("test success")
+})
 
-// http://127.0.0.1:3000/getall
+// limit visitors
 
+const maxVisitors = 500;
 
+const limitConcurrentSessions = async (req,res,next) =>{
 
-
+    try {
+        const sessions = await redis.get('sessions') || 0;
+        if(sessions >= maxVisitors){
+            res.status(429).send('too much visitors now, please try again');
+        }
+        else{
+            await redis.incr('sessions');
+            if( sessions === 0){
+                await redis.expire('sessions',3600);
+            }
+        }
+        next();
+    }
+    catch(error) {
+        console.error('Have errors or exceed the quantity of visitors: ', error);
+        res.status(500).send('serve error')
+    }
+} 
