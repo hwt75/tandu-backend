@@ -69,3 +69,7 @@ const limitConcurrentSessions = async (req,res,next) =>{
         res.status(500).send('serve error')
     }
 } 
+
+
+const partner = require('./controllers/partners.controller');
+console.log(partner)
