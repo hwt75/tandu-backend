@@ -2,19 +2,56 @@ const scholarships = {
   korean: [
     {
       id: "1",
-      name: "Học bổng trao đổi sinh viên (Global Korea Scholarship)",
-      description:
-        "Đây là chương trình học bổng trao đổi của chính phủ Hàn Quốc dành cho các sinh viên quốc tế. Thông thường sẽ kéo dài 4- 8 tháng. Mỗi năm chính phủ sẽ dành ra 120 suất học bổng này cho sinh viên, bao gồm các chi phí: sinh hoạt phí (500.000 won/tháng), vé máy bay khứ hồi và chỗ ở (200.000 won/tháng), bảo hiểm y tế (200.000 won/tháng).",
+      name: "Học bổng chính phủ",
+      target: "Học sinh, sinh viên đã tốt nghiệp GPA 8.0 trở lên",
+      description: "100% học phí",
     },
-    {id: "", name: "",description:"",},
-    {id: "", name: "",description:"",},
-    {id: "", name: "",description:"",},
-
+    {
+      id: "2",
+      name: "Học bổng từ các tổ chức Phi Chính phủ",
+      target: "Tất cả các sinh viên",
+      description:
+        "30% - 100% học phí và hỗ trợ các chi phí khác (bảo hiểm, ký túc,...)",
+    },
+    {
+      id: "3",
+      name: "Học bổng từ các trường Đại học",
+      target: "Sinh viên mới nhập học, sinh viên đang theo học tại trường",
+      description: "30% - 100% học phí",
+    },
   ],
-  taiwan:[
-    {id: "", name: "",description:"",},
-    {id: "", name: "",description:"",},
-    {id: "", name: "",description:"",},
-
-  ]
+  taiwan: [
+    {
+      id: "1",
+      name: "Học bổng chính phủ Việt Nam",
+      target: "Giảng viên, công chức nhà nước",
+      description: "100% học phí và sinh hoạt phí",
+    },
+    {
+      id: "2",
+      name: "Học bổng Bộ Giáo dục Đài Loan",
+      description: "50% - 100% học phí và một số chi phí khác (sinh hoạt phí)",
+      target: "Sinh viên đang theo học hệ cử nhân, thạc sĩ, tiến sĩ",
+    },
+    {
+      id: "3",
+      name: "Học bổng từ các trường Đại học",
+      description: "50% - 100% học phí và ký túc xá",
+      target: "Sinh viên đang theo học tại trường",
+    },
+    {
+      id: "4",
+      name: "Học bổng từ các Quỹ phúc lợi xã hội",
+      description: "Sinh viên thuộc các trường là đối tác của Quỹ",
+      target:
+        "30% - 100% học phí và một số chi phí khác (bảo hiểm, ký túc xá...)",
+    },
+  ],
 };
+class ScholarshipController{
+  getAll (req,res,next){
+    res.json(scholarships)
+  }
+}
+
+module.exports = new ScholarshipController;
