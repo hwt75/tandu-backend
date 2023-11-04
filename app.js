@@ -44,32 +44,3 @@ app.use('/api',routes);
 app.get('/', (req,res)=>{
     res.json("test success")
 })
-
-// limit visitors
-
-const maxVisitors = 500;
-
-const limitConcurrentSessions = async (req,res,next) =>{
-
-    try {
-        const sessions = await redis.get('sessions') || 0;
-        if(sessions >= maxVisitors){
-            res.status(429).send('too much visitors now, please try again');
-        }
-        else{
-            await redis.incr('sessions');
-            if( sessions === 0){
-                await redis.expire('sessions',3600);
-            }
-        }
-        next();
-    }
-    catch(error) {
-        console.error('Have errors or exceed the quantity of visitors: ', error);
-        res.status(500).send('serve error')
-    }
-} 
-
-
-const partner = require('./controllers/partners.controller');
-console.log(partner)
