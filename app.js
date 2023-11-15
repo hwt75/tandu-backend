@@ -28,19 +28,17 @@ app.use(compression());
 app.use(bodyParser.json({limit: '50mb'}));
 
 //set up static files
-app.use(express.static(path.join(__dirname, './public')));
-app.engine('ejs',require('ejs-locals'));
-app.set('view engine', 'ejs');
-app.set('views',path.join(__dirname,'views'));
+app.use(express.static('./build'));
+// app.engine('ejs',require('ejs-locals'));
+// app.set('view engine', 'ejs');
+// app.set('views',path.join(__dirname,'views'));
 
 
 
 app.listen(app.get('port'), app.get('host'),()=>{
-    console.log(`Server is running at http://${app.get('host')}:${app.get('port')}`)
+    console.log(`hello Server is running at http://${app.get('host')}:${app.get('port')}`)
 })
 
 // app.use(limitConcurrentSessions)
 app.use('/api',routes);
-app.get('/', (req,res)=>{
-    res.json("test success")
-})
+
